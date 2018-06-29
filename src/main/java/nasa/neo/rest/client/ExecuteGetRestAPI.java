@@ -29,6 +29,7 @@ public class ExecuteGetRestAPI extends GenericExecuteRestAPI {
 		System.out.println("Response code is: " +responsecode);
 		if(responsecode != 200)
 		{
+			
 			Scanner sc = new Scanner(conn.getErrorStream());
 			while(sc.hasNext())
 			{
