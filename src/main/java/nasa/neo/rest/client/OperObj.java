@@ -1,7 +1,5 @@
 package nasa.neo.rest.client;
 
-import com.google.gson.JsonObject;
-
 public class OperObj
 {
 
@@ -21,7 +19,7 @@ public class OperObj
 	protected String name;
 	protected String displayMsg;
 	
-	protected Double numValue;
+	protected Double numValue = new Double(-1);
 	public Double getNumValue() {
 		return numValue;
 	}
@@ -30,7 +28,13 @@ public class OperObj
 	}
 	protected String path;
 	protected String leafNode;
-	protected JsonObject jsonObjResult;
+	protected String resultKey;
+	public String getResultKey() {
+		return resultKey;
+	}
+	public void setResultKey(String resultKey) {
+		this.resultKey = resultKey;
+	}
 	protected String operation;
 	protected Integer index=0;
 	protected String[] pathArr;
@@ -41,7 +45,9 @@ public class OperObj
 	public void setPath(String path)
 	{
 		this.path = path;
-		pathArr =  this.path.split("/");
+		if(this.path.startsWith(IConstants.PATHSPLITTER))
+			this.path = this.path.replaceFirst(IConstants.PATHSPLITTER, IConstants.EMPTYSTR);
+		pathArr =  this.path.split(IConstants.PATHSPLITTER);
 		leafNode = pathArr[pathArr.length-1];
 	}
 	public String getLeafNode() {
@@ -50,12 +56,12 @@ public class OperObj
 	public void setLeafNode(String leafNode) {
 		this.leafNode = leafNode;
 	}
-	public JsonObject getJsonObjResult() {
-		return jsonObjResult;
-	}
-	public void setJsonObjResult(JsonObject jsonObjResult) {
-		this.jsonObjResult = jsonObjResult;
-	}
+//	public JsonObject getJsonObjResult() {
+//		return jsonObjResult;
+//	}
+//	public void setJsonObjResult(JsonObject jsonObjResult) {
+//		this.jsonObjResult = jsonObjResult;
+//	}
 	public String getOperation() {
 		return operation;
 	}

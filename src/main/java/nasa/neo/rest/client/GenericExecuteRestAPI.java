@@ -1,6 +1,7 @@
 package nasa.neo.rest.client;
 
 import java.net.MalformedURLException;
+import java.util.Properties;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -19,11 +20,12 @@ public abstract class  GenericExecuteRestAPI
 	protected String url;
 	protected  String operation;
 	protected JsonObject jsonTree;
-	
-	public GenericExecuteRestAPI(String url, String operation)
+	Properties prop;
+	public GenericExecuteRestAPI(String url, String operation, Properties prop)
 	{
 		this.url=url;
 		this.operation=operation;
+		this.prop=prop;
 	}
 	public String getUrl() {
 		return url;

@@ -1,13 +1,10 @@
 package nasa.neo.rest.client;
 
-import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Properties;
-import java.util.TimeZone;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.config.PropertiesFactoryBean;
 import org.springframework.core.io.FileSystemResourceLoader;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
@@ -15,6 +12,7 @@ import org.springframework.core.io.support.ResourcePatternResolver;
 
 public class LoadConfigurationData 
 {
+	static final Logger logger = Logger.getLogger(LoadConfigurationData.class);
 	public static Properties getProp() {
 		return prop;
 	}
@@ -38,64 +36,85 @@ public class LoadConfigurationData
 	public static void setChildObjList(List<OperObj> childObjList) {
 		LoadConfigurationData.childObjList = childObjList;
 	}
-
+	
 	private static Properties prop;
 	
-	private static OperObj parentObj;
+	private static OperObj parentObj = new OperObj();
 	
-	private static List<OperObj> childObjList;
+	private static OperObj countElement = new OperObj();
 	
-	public static void loadConfData(String propertyFile) throws IOException 
-	{
-		ResourcePatternResolver resourceResolver = new PathMatchingResourcePatternResolver(
-				new FileSystemResourceLoader());
+	public static OperObj getCountElement() {
+		return countElement;
+	}
 
-		PropertiesFactoryBean propertyBean = new PropertiesFactoryBean();
-		propertyBean.setLocation(resourceResolver.getResource(propertyFile));
-		propertyBean.afterPropertiesSet();
-		prop = propertyBean.getObject();
-		System.out.println(" -> "+prop);
-		createParentObject(prop);
-		createChildObjectList(prop);
-	} 
+	public static void setCountElement(OperObj countElement) {
+		LoadConfigurationData.countElement = countElement;
+	}
 
-	public static void createChildObjectList(Properties prop) throws IOException 
+	private static List<OperObj> childObjList = new ArrayList<OperObj>();
+	
+	private static StringBuilder errorMsg= new StringBuilder(IConstants.BASICVALSTR);
+	
+	public static StringBuilder getErrorMsg() {
+		return errorMsg;
+	}
+
+	public static void setErrorMsg(StringBuilder errorMsg) {
+		LoadConfigurationData.errorMsg = errorMsg;
+	}
+
+	public static boolean loadConfData(String propertyFile) throws Exception 
 	{
-		childObjList = new ArrayList<OperObj>();
-		int count = Integer.parseInt(prop.getProperty(IConstants.CHILDNODECOUNT));
-		OperObj childObj;
-		for(int i=1;i<=count;i++)
+		boolean fileLoadSuccessfully = false;
+		try
 		{
-			childObj = new OperObj();
-			childObj.setName(prop.getProperty(IConstants.CHILDNODENAME.replace(IConstants.CHILDREPSTR, IConstants.EMPTYSTR+i)));
-			childObj.setPath(prop.getProperty(IConstants.CHILDNODEPATH.replace(IConstants.CHILDREPSTR, IConstants.EMPTYSTR+i)));
-			childObj.setOperation(prop.getProperty(IConstants.CHILDNODEOPERATION.replace(IConstants.CHILDREPSTR, IConstants.EMPTYSTR+i)));
-			childObj.setDisplayMsg(prop.getProperty(IConstants.CHILDNODEDISMSG.replace(IConstants.CHILDREPSTR, IConstants.EMPTYSTR+i)));
-			childObjList.add(childObj);
-		}
-	} 
+			logger.debug(" loadConfData:: entry ");
+			ResourcePatternResolver resourceResolver = new PathMatchingResourcePatternResolver(
+					new FileSystemResourceLoader());
 	
-	public static OperObj createParentObject(Properties prop) throws IOException 
-	{
-		parentObj = new OperObj();
-		String updatedStr = evaluteParentNode(prop.getProperty(IConstants.PARENTNODE));
-		parentObj.setPath(updatedStr);
-		return parentObj;
+			PropertiesFactoryBean propertyBean = new PropertiesFactoryBean();
+			propertyBean.setLocation(resourceResolver.getResource(propertyFile));
+			propertyBean.afterPropertiesSet();
+			prop = propertyBean.getObject();
+			
+			if(UtilFunction.propertyValidations(prop,errorMsg))
+			{
+				UtilFunction.loadData(prop, childObjList, parentObj,countElement);
+				fileLoadSuccessfully = true;
+			}	
+			logger.debug(" loadConfData:: exit ::fileLoadSuccessfully"+fileLoadSuccessfully+" "+prop);
+		}
+		catch(java.io.FileNotFoundException e)
+		{
+			logger.error("loadConfData::ERROR:"+e.getMessage());
+			throw e;
+		}
+		catch(Exception e)
+		{
+			logger.error("loadConfData::ERROR:"+e.getMessage());
+			throw e;
+		}
+		return fileLoadSuccessfully;
 	} 
 
-	public static String evaluteParentNode(String parentNode) throws IOException 
+	
+	public static void main(String args[]) throws Exception
 	{
-		Date date = new Date();  
-		SimpleDateFormat formatter = new SimpleDateFormat(IConstants.DATEFORMAT);  
-		formatter.setTimeZone(TimeZone.getTimeZone("UTC"));
-		String strDate = formatter.format(date);  
-		String updatedStr = parentNode.replace(IConstants.DATEREPSTR, strDate);
-		return updatedStr;
-	} 
-
-	public static void main(String args[]) throws IOException
-	{
-		evaluteParentNode("near_earth_objects/2018-06-29/neo_reference_id");
+		
+		//evaluteParentNode("near_earth_objects/2018-06-29/neo_reference_id");
+		try
+		{
+			boolean flag = loadConfData("config.properties");
+			//BasicConfigurator.configure();
+			System.out.println(flag);
+			System.out.println(errorMsg);
+		}
+		catch(Exception e)
+		{
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+		}
+		//System.out.println(" "+errorMsg);
 	}
 	
 	

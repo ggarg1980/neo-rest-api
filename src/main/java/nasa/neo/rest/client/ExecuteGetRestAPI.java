@@ -3,53 +3,71 @@ package nasa.neo.rest.client;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Properties;
 import java.util.Scanner;
+
+import org.apache.log4j.Logger;
 
 public class ExecuteGetRestAPI extends GenericExecuteRestAPI {
 
+	static final Logger logger = Logger.getLogger(ExecuteGetRestAPI.class);
 	public ExecuteGetRestAPI() 
 	{
 		super();
 	}
-
-	public ExecuteGetRestAPI(String url) 
+	//Properties prop;
+	public ExecuteGetRestAPI(String url,Properties prop) 
 	{
-		super(url,"GET");
+		super(url,"GET",prop);
+		
 	}
 
 	@Override
 	public String callRestAPI() throws MalformedURLException,Exception
 	{
 		StringBuilder strbuilder = new StringBuilder();
-		URL restUrl = new URL(url);
-		HttpURLConnection conn = (HttpURLConnection)restUrl.openConnection();
-		conn.setRequestMethod(operation);
-		conn.connect();
-		int responsecode = conn.getResponseCode();
-		System.out.println("Response code is: " +responsecode);
-		if(responsecode != 200)
+		HttpURLConnection conn = null;
+		Scanner sc = null;
+		try
 		{
-			
-			Scanner sc = new Scanner(conn.getErrorStream());
+			URL restUrl = new URL(url);
+			conn = (HttpURLConnection)restUrl.openConnection();
+			conn.setRequestMethod(operation);
+			conn.connect();
+			int responsecode = conn.getResponseCode();
+			switch(responsecode)
+			{
+				case 401:
+					logger.error(IConstants.HTTPERRORCODE401);
+					throw new RuntimeException(IConstants.HTTPERRORCODE401);
+				case 403:
+					logger.error(IConstants.HTTPERRORCODE403);
+					throw new RuntimeException(IConstants.HTTPERRORCODE403);
+				case 404:
+					logger.error(IConstants.HTTPERRORCODE404);
+					throw new RuntimeException(IConstants.HTTPERRORCODE404);
+				case 200:
+					break;
+			}
+			sc = new Scanner(restUrl.openStream());
 			while(sc.hasNext())
 			{
 				strbuilder.append(sc.nextLine());
 			}
-			throw new RuntimeException("HttpResponseCode: " +responsecode+ strbuilder.toString());
+			logger.debug("\nJSON Response in String format \n"+strbuilder); 
 		}
-		else
+		catch(Exception e)
 		{
-			Scanner sc = new Scanner(restUrl.openStream());
-			while(sc.hasNext())
-			{
-				strbuilder.append(sc.nextLine());
-			}
-			System.out.println("\nJSON Response in String format"); 
-			System.out.println(strbuilder);
-			//Close the stream when reading the data has been finished
-			sc.close();
+			logger.error(e.getMessage());
+			throw e;
 		}
-		conn.disconnect();
+		finally
+		{
+			if(sc!=null)
+				sc.close();	
+			if(conn!=null)
+				conn.disconnect();
+		}
 		return strbuilder.toString();
 	}
 
