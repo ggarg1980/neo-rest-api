@@ -27,13 +27,19 @@ public interface IConstants
 	public String BASICVALSTR = "Basic Validations failed :\n";
 	public String JSONPATHERROR = " \n ERROR: Child = {0}  \n JSON Path = {1} \n Problematic Path = {2}. Please fix before proceeding.";
 	
+	public String DISPLAYCHILDRESULT = "Child Name = {0} :: {1} = {2}  ::  Operation = {3} :: Path = {4} :: Value = {5} \n";
+	public String PRINTJSONOBJ = "PrintJsonObject = \n {0} \n";
 	
 	
 	public String CHILDVALIDATIONMSG ="{0}. The child object should contain nasa.neo.rest.child.{1} all parameters like name,path,operation,displaymsg. Valid values for Operation are "+OPERATIONLIST+". \n";
 	public String CHILDCOUNTVALIDATIONMSG ="{0}. The child count ({1}) should be non empty and valid e.g. 2. \n";
 	
+	public String HTTPERRORCODE400 = "HttpResponseCode: 400 Internal Server error. Please check the input URL and date parameters and formatting.";
 	public String HTTPERRORCODE401 = "HttpResponseCode: 401 Unauthorized to use API.";
 	public String HTTPERRORCODE403 = "HttpResponseCode: 403 Forbidden to use API (check API key).";
 	public String HTTPERRORCODE404 = "HttpResponseCode: 404 Requested resouce not found check URL.";
 	
+	public String CONST1 ="==================================================================================================================================================";
+	public String CONST2 ="===============================================DISPLAYING RESULTS=================================================================================";
+    
 }

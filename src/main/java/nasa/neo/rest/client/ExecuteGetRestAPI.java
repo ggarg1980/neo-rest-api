@@ -37,6 +37,10 @@ public class ExecuteGetRestAPI extends GenericExecuteRestAPI {
 			int responsecode = conn.getResponseCode();
 			switch(responsecode)
 			{
+				case 400:
+					logger.error(IConstants.HTTPERRORCODE400);
+					throw new RuntimeException(IConstants.HTTPERRORCODE400);
+			
 				case 401:
 					logger.error(IConstants.HTTPERRORCODE401);
 					throw new RuntimeException(IConstants.HTTPERRORCODE401);

@@ -177,9 +177,9 @@ public class UtilFunction
 		
 	    Gson gson = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
 		   
-	    logger.info("==================================================================================================================================================");
-	    logger.info("===============================================DISPLAYING RESULTS=================================================================================");
-	    logger.info("==================================================================================================================================================");
+	    logger.info(IConstants.CONST1);
+	    logger.info(IConstants.CONST2);
+	    logger.info(IConstants.CONST1);
 	   for (Map.Entry<String,JsonObject> entry : mapListCount.entrySet()) 
 	   {
 		   logger.info(MessageFormat.format(elecount.getDisplayMsg(),entry.getKey()));
@@ -187,8 +187,9 @@ public class UtilFunction
 	    
 	   for (OperObj childNode : childObjList) 
 	   {
-		   logger.info("Child Name="+childNode.getName()+" :: "+parentObj.getLeafNode()+"="+childNode.getResultKey()+" ::  Operation="+childNode.getOperation()+" :: Path="+childNode.getPath() +" :: Value="+childNode.getNumValue()+" \n");
-		   logger.info("PrintJsonObject="+ gson.toJson(uniqueNodes.get(childNode.getResultKey()))+" \n");
+		   logger.info(childNode.getDisplayMsg());
+		   logger.info(MessageFormat.format(IConstants.DISPLAYCHILDRESULT,childNode.getName(), parentObj.getLeafNode(),childNode.getResultKey(),childNode.getOperation(), childNode.getPath(),childNode.getNumValue()));
+		   logger.info(MessageFormat.format(IConstants.PRINTJSONOBJ,gson.toJson(uniqueNodes.get(childNode.getResultKey()))));
 	   }
 	}
 	
