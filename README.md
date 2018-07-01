@@ -7,7 +7,7 @@ Output the total number of NEOs, and the details retrieved for both the largest 
 ## Getting Started
 Please install following softwares on your system
 1. Install JAVA (v1.8)
-2. Install Maven (largest)
+2. Install Maven (latest)
 3. Register on NASA Open APIs using [NEO-REST-API-REGISTER](https://api.nasa.gov/index.html#apply-for-an-api-key) and get API-Key for calling APIs.
 
 ## Download
