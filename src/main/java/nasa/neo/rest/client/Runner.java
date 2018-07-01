@@ -55,7 +55,7 @@ class Runner
 		}
 		catch (Exception e)
 		{
-			//e.printStackTrace();
+			e.printStackTrace();
 			logger.error(e.getMessage());
 		}
 
