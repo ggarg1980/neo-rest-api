@@ -2,6 +2,20 @@ package nasa.neo.rest.client;
 
 public interface IConstants
 {
+	
+	public String PROXYUSE ="nasa.neo.network.useproxy"; 
+	public String PROXYHOSTNAME = "nasa.neo.network.https.proxyhost";
+	public String PROXYHOSTPORT	= "nasa.neo.network.https.proxyport";
+	public String PROXYUSERNAME="nasa.neo.network.https.proxyuser";
+	public String PROXYUSERPASSWORD="nasa.neo.network.https.password";
+	public String JAVASYSPROXIES ="java.net.useSystemProxies"; 
+	public String JAVAPROXYSET = "proxySet";
+	public String JAVAPROXYHOSTNAME	= "https.proxyHost";
+	public String JAVAPROXYHOSTPORT="https.proxyPort";
+	public String JAVAPROXYUSERPNAME="https.proxyUser";
+	public String JAVAPROXYUSERPASSWD="https.proxyPassword";
+	public String TRUE="true";		
+	
 	public String URL ="nasa.neo.rest.api.url";
 	public String PARENTNODE ="nasa.neo.rest.parent.node";
 	public String CHILDNODECOUNT ="nasa.neo.rest.child.operation.count";

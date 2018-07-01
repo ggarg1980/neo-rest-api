@@ -26,18 +26,18 @@ public class OperObj
 	public void setNumValue(Double numValue) {
 		this.numValue = numValue;
 	}
-	protected String path;
-	protected String leafNode;
-	protected String resultKey;
+	private String path;
+	private String leafNode;
+	private String resultKey;
 	public String getResultKey() {
 		return resultKey;
 	}
 	public void setResultKey(String resultKey) {
 		this.resultKey = resultKey;
 	}
-	protected String operation;
-	protected Integer index=0;
-	protected String[] pathArr;
+	private String operation;
+	private Integer index=0;
+	private String[] pathArr;
 	
 	public String getPath() {
 		return path;
