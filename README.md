@@ -60,7 +60,7 @@ nasa.neo.rest.child.[].name -> Name of the Child Operation like LARGEST_OBJECT
 
 nasa.neo.rest.child.[].path -> Relative path from "parent node" (Step#4) till leaf node like close_approach_data/miss_distance/kilometers
 
-nasa.neo.rest.child.[].opertion -> two possible values are defined smallest/largest
+nasa.neo.rest.child.[].opertion -> Current version supports two operations, 1. smallest 2. largest Only. This can be extended in future
 
 nasa.neo.rest.child.[].displaymsg -> Message to be displayed
 
