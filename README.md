@@ -64,18 +64,23 @@ Example below in the sample file
 
 #### 7. Following properties are used to define proxy settings, in case if you behind wirewall.
 nasa.neo.network.useproxy - Set this property to true if proxy settings are to be used. (Possible values true/false)
+
 Example  nasa.neo.network.useproxy=true
 
 nasa.neo.network.https.proxyhost - Set your proxy host in this property
+
 Example  nasa.neo.network.https.proxyhost=my.company.proxy
 
 nasa.neo.network.https.proxyport - Set the proxy port in this property 
+
 Example nasa.neo.network.https.proxyport=8000
 
 nasa.neo.network.https.proxyuser - Set the proxy user-name in this property
+
 Example nasa.neo.network.https.proxyuser=ggarg
 
 nasa.neo.network.https.password - Set the proxy password in this property
+
 Example nasa.neo.network.https.password=ggarg
 
 ```
