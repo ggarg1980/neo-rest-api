@@ -55,13 +55,9 @@ Example nasa.neo.rest.child.operation.count=2
 [] - This is numeric value starting from 1 and goes till count defined in nasa.neo.rest.child.operation.count property
 
 This has following tags:     
-
 nasa.neo.rest.child.[].name -> Name of the Child Operation like LARGEST_OBJECT
-
 nasa.neo.rest.child.[].path -> Relative path from "parent node" (Step#4) till leaf node like close_approach_data/miss_distance/kilometers
-
 nasa.neo.rest.child.[].opertion -> Current version supports two operations, 1. smallest 2. largest Only. This can be extended in future
-
 nasa.neo.rest.child.[].displaymsg -> Message to be displayed
 
 Example below in the sample file
@@ -69,18 +65,14 @@ Example below in the sample file
 #### 7. Following properties are used to define proxy settings, in case if you behind wirewall.
 nasa.neo.network.useproxy - Set this property to true if proxy settings are to be used. (Possible values true/false)
 Example  nasa.neo.network.useproxy=true
-
 nasa.neo.network.https.proxyhost - Set your proxy host in this property
 Example  nasa.neo.network.https.proxyhost=my.company.proxy
-
 nasa.neo.network.https.proxyport - Set the proxy port in this property 
-nasa.neo.network.https.proxyport=8000
-
+Example nasa.neo.network.https.proxyport=8000
 nasa.neo.network.https.proxyuser - Set the proxy user-name in this property
-nasa.neo.network.https.proxyuser=ggarg
-
+Example nasa.neo.network.https.proxyuser=ggarg
 nasa.neo.network.https.password - Set the proxy password in this property
-nasa.neo.network.https.password=ggarg
+Example nasa.neo.network.https.password=ggarg
 
 ```
 Sample property file for reference 
