@@ -11,11 +11,11 @@ Please install following softwares on your system
 3. Register on NASA Open APIs using [NEO-REST-API-REGISTER](https://api.nasa.gov/index.html#apply-for-an-api-key) and get API-Key for calling APIs.
 
 ## Download
-1. Please download code from  [Download](https://github.com/ggarg1980/neo-rest-api/) URL. Click on "Clone or Download" button and down ZIP
-2. Unzip the ZIP file
-3. Inside the ZIP file where src folder is present. Open command prompt and run "mvn clean package" command 
-4. Check BUILD is successful and neorestapi-0.0.1-SNAPSHOT.jar is created inside "target" folder
-5. Go inside target folder and run the program using following command
+1. Please download code from  [Download](https://github.com/ggarg1980/neo-rest-api/) URL. Click on "Clone or Download" button and download ZIP file.
+2. Unzip the ZIP file.
+3. Inside the ZIP file where src folder is present. Open command prompt and run "mvn clean package" command.
+4. Check BUILD is successful and neorestapi-0.0.1-SNAPSHOT.jar is created inside "target" folder.
+5. Go inside target folder and run the program using following command.
 ```
    java -cp neorestapi-0.0.1-SNAPSHOT.jar nasa.neo.rest.client.Runner ../config.properties
 ```
