@@ -21,17 +21,17 @@ Please install following softwares on your system
 ```
 *Note: Please give proper path where config.properties file is present. Please configure properties before running the program. Refer Configuring properties section below
 
-### Configuring properties file config.properties 
-*NOTE: Before configuring the data please refer to the API response objects for better understanding
+### Configuring properties file - config.properties 
+*NOTE: Before configuring the data in config file, please refer to the API response objects for better understanding (link on Valid URLs for response object).
 
-#### 1. nasa.neo.rest.api.url - This property is used to represent URL to called
+#### 1. nasa.neo.rest.api.url - This property is used to represent URL to be called
 Valid URLs
 1. [Daily Feed URL](https://api.nasa.gov/neo/rest/v1/feed/today?detailed=true&api_key=DEMO_KEY)
 2. [Date range Feed](https://api.nasa.gov/neo/rest/v1/feed?start_date=2018-08-29&end_date=2018-08-29&api_key=DEMO_KEY)
 
 start_date & end_date are dates in format yyyy-MM-dd e.g. 2018-08-29
 
-*Note: Please use DEMO_KEY or your own key retrieved in step.3 of getting started 
+*Note: Please use DEMO_KEY or your own key retrieved in step.3 of 'Getting Started'
 
 Example 
 
@@ -51,18 +51,18 @@ Example nasa.neo.rest.parent.node=neo_reference_id
 #### 5. nasa.neo.rest.child.operation.count - This property defines how many comparison operations needs to be performed e.g. 1,2,3 etc
 Example nasa.neo.rest.child.operation.count=2
 
-#### 5. nasa.neo.rest.child.{}
-{} - This is numeric value starting from 1 and goes till count defined in nasa.neo.rest.child.operation.count property
+#### 6. nasa.neo.rest.child.[]. (name,path,operation,displaymsg)
+[] - This is numeric value starting from 1 and goes till count defined in nasa.neo.rest.child.operation.count property
 
-This has following tags     
+This has following tags:     
 
-nasa.neo.rest.child.{}.name -> Name of the Child Operation like LARGEST_OBJECT
+nasa.neo.rest.child.[].name -> Name of the Child Operation like LARGEST_OBJECT
 
-nasa.neo.rest.child.{}.path -> Relative path from "parent node" (Step#4) till leaf node like close_approach_data/miss_distance/kilometers
+nasa.neo.rest.child.[].path -> Relative path from "parent node" (Step#4) till leaf node like close_approach_data/miss_distance/kilometers
 
-nasa.neo.rest.child.{}.opertion -> two possible values are defined smallest/largest
+nasa.neo.rest.child.[].opertion -> two possible values are defined smallest/largest
 
-nasa.neo.rest.child.{}.displaymsg -> Message to be displayed
+nasa.neo.rest.child.[].displaymsg -> Message to be displayed
 
 Example below in the sample file
 
