@@ -24,8 +24,8 @@ Please install following softwares on your system
 
 #### 1. nasa.neo.rest.api.url - This property is used to respresent URL to called
 Valid URLs
-[Daily Feed URL](https://api.nasa.gov/neo/rest/v1/feed/today?detailed=true&api_key=DEMO_KEY)
-[Date range Feed](https://api.nasa.gov/neo/rest/v1/feed?start_date=2018-08-29&end_date=2018-08-29&api_key=DEMO_KEY)
+1. [Daily Feed URL](https://api.nasa.gov/neo/rest/v1/feed/today?detailed=true&api_key=DEMO_KEY)
+2. [Date range Feed](https://api.nasa.gov/neo/rest/v1/feed?start_date=2018-08-29&end_date=2018-08-29&api_key=DEMO_KEY)
 
 start_date & end_date are dates in format yyyy-MM-dd e.g. 2018-08-29
 *Note: Please use DEMO_KEY or your own key retrieved in step.3 of getting started 
