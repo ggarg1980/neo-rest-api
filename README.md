@@ -1,6 +1,6 @@
 # NEO-REST-API
 
-“Near Earth Objects” using the NASA RESTful Web Service https://api.nasa.gov/api.html#NeoWS . 
+“Near Earth Objects” using the NASA RESTful Web Service [NEO-REST-API] (https://api.nasa.gov/api.html#NeoWS) . 
 Identify which NEO is the largest in size and which is the closest to Earth.  
 Output the total number of NEOs, and the details retrieved for both the largest and closest NEOs identified.
 
@@ -20,6 +20,8 @@ Please install following softwares on your system
    *Note: Please give proper path where config.properties file is present. Please configure properties before running the program. Refer Configuring properties section below
 
 ### Configuring properties file config.properties 
+*NOTE: Before configuring the data please refer to the API response objects for better understanding
+
 #### 1. nasa.neo.rest.api.url - This property is used to respresent URL to called
 Valid URLs
 https://api.nasa.gov/neo/rest/v1/feed/today?detailed=true&api_key=DEMO_KEY
@@ -31,58 +33,53 @@ Example
 nasa.neo.rest.api.url=https://api.nasa.gov/neo/rest/v1/feed?start_date=2018-08-29&end_date=2018-08-29&api_key=DEMO_KEY
 
 #### 2. nasa.neo.rest.elementcount.path - This element identifies the path where total count is present 
-As per the current specs it present under "element_count" path 
+As per the current specs "element_count" should be used 
 Example nasa.neo.rest.elementcount.path=element_count
 
 #### 3. nasa.neo.rest.elementcount.displaymsg - This property is used for displaying message for the number of objects
 Example nasa.neo.rest.elementcount.displaymsg=The total number of elements are {0}
 
-#### 4. nasa.neo.rest.parent.node - This is very important prope
+#### 4. nasa.neo.rest.parent.node - This property is used to determine all the unique objects returned from the response
+As per the current specs "neo_reference_id" should be used
+Example nasa.neo.rest.parent.node=neo_reference_id
 
-nasa.neo.rest.child.operation.count=4
+#### 5. nasa.neo.rest.child.operation.count - This property defines how many comparison opertions needs to be performed e.g. 1,2,3 etc
+Example nasa.neo.rest.child.operation.count=2
 
-nasa.neo.rest.child.1.name=child1
-nasa.neo.rest.child.1.path=/close_approach_data/miss_distance/kilometers
-nasa.neo.rest.child.1.operation=largest
-nasa.neo.rest.child.1.displaymsg=Displaying smallest miss distance -
+#### 5. nasa.neo.rest.child.{}
+ {} - This is numeric value starting from 1 and goes till count defined in nasa.neo.rest.child.operation.count property
+ This has following tags     
+nasa.neo.rest.child.{}.name -> Name of the Child Operation like LARGEST_OBJECT
+nasa.neo.rest.child.{}.path -> Relative path from "parent node" (Step#4) till leaf node like close_approach_data/miss_distance/kilometers
+nasa.neo.rest.child.{}.opertion -> two possible values are defined smallest/largest
+nasa.neo.rest.child.{}.displaymsg -> Message to be displayed
+Example below in the sample file
 
-nasa.neo.rest.child.2.name=child2
+```
+Sample property file for reference 
+
+nasa.neo.rest.api.url=https://api.nasa.gov/neo/rest/v1/feed?start_date=2018-08-29&end_date=2018-08-29&api_key=DEMO_KEY
+nasa.neo.rest.elementcount.path=element_count
+nasa.neo.rest.elementcount.displaymsg=The total number of elements are {0}
+nasa.neo.rest.parent.node=neo_reference_id
+nasa.neo.rest.child.operation.count=3
+
+nasa.neo.rest.child.1.name=CLOSEST_OBJECT_TO_EARTH
+nasa.neo.rest.child.1.path=close_approach_data/miss_distance/kilometers
+nasa.neo.rest.child.1.operation=smallest
+nasa.neo.rest.child.1.displaymsg=Displaying closest object to earth, details as below
+
+nasa.neo.rest.child.2.name=LARGEST_OBJECT
 nasa.neo.rest.child.2.path=estimated_diameter/kilometers/estimated_diameter_max
 nasa.neo.rest.child.2.operation=largest
-nasa.neo.rest.child.2.displaymsg=Displaying smallest miss distance -
+nasa.neo.rest.child.2.displaymsg=Displaying largest object, details as below
 
-
-nasa.neo.rest.child.3.name=child3
+nasa.neo.rest.child.3.name=ABS_MAG_H
 nasa.neo.rest.child.3.path=absolute_magnitude_h
 nasa.neo.rest.child.3.operation=largest
-nasa.neo.rest.child.3.displaymsg=Displaying smallest miss distance -
-
-
-nasa.neo.rest.child.4.name=child4
-nasa.neo.rest.child.4.path=neo_reference_id
-nasa.neo.rest.child.4.operation=smallest
-nasa.neo.rest.child.4.displaymsg=Displaying smallest miss distance -
-
-
-
-
-
-step by step series of examples that tell you how to get a development env running
-dfdsf
-https://github.com/ggarg1980/neo-rest-api/
-Say what the step will be
+nasa.neo.rest.child.3.displaymsg=Displaying largest magnitude details 
 
 ```
-Give the example
-```
-
-And repeat
-
-```
-until finished
-```
-
-End with an example of getting some data out of the system or using it for a little demo
 
 ## Running the tests
 
