@@ -66,6 +66,22 @@ nasa.neo.rest.child.[].displaymsg -> Message to be displayed
 
 Example below in the sample file
 
+#### 7. Following properties are used to define proxy settings, in case if you behind wirewall.
+nasa.neo.network.useproxy - Set this property to true if proxy settings are to be used. (Possible values true/false)
+Example  nasa.neo.network.useproxy=true
+
+nasa.neo.network.https.proxyhost - Set your proxy host in this property
+Example  nasa.neo.network.https.proxyhost=my.company.proxy
+
+nasa.neo.network.https.proxyport - Set the proxy port in this property 
+nasa.neo.network.https.proxyport=8000
+
+nasa.neo.network.https.proxyuser - Set the proxy user-name in this property
+nasa.neo.network.https.proxyuser=ggarg
+
+nasa.neo.network.https.password - Set the proxy password in this property
+nasa.neo.network.https.password=ggarg
+
 ```
 Sample property file for reference 
 
@@ -89,6 +105,12 @@ nasa.neo.rest.child.3.name=ABS_MAG_H
 nasa.neo.rest.child.3.path=absolute_magnitude_h
 nasa.neo.rest.child.3.operation=largest
 nasa.neo.rest.child.3.displaymsg=Displaying largest magnitude details 
+
+nasa.neo.network.useproxy=true
+nasa.neo.network.https.proxyhost=my.company.proxy
+nasa.neo.network.https.proxyport=8000
+nasa.neo.network.https.proxyuser=ggarg
+nasa.neo.network.https.password=ggarg
 
 ```
 
