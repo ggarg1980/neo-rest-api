@@ -98,24 +98,24 @@ public class LoadConfigurationData
 	} 
 
 	
-	public static void main(String args[]) throws Exception
-	{
-		
-		//evaluteParentNode("near_earth_objects/2018-06-29/neo_reference_id");
-		try
-		{
-			boolean flag = loadConfData("config.properties");
-			//BasicConfigurator.configure();
-			System.out.println(flag);
-			System.out.println(errorMsg);
-		}
-		catch(Exception e)
-		{
-			System.out.println(e.getMessage());
-			e.printStackTrace();
-		}
-		//System.out.println(" "+errorMsg);
-	}
-	
+//	public static void main(String args[]) throws Exception
+//	{
+//		
+//		//evaluteParentNode("near_earth_objects/2018-06-29/neo_reference_id");
+//		try
+//		{
+//			boolean flag = loadConfData("config.properties");
+//			//BasicConfigurator.configure();
+//			System.out.println(flag);
+//			System.out.println(errorMsg);
+//		}
+//		catch(Exception e)
+//		{
+//			System.out.println(e.getMessage());
+//			e.printStackTrace();
+//		}
+//		//System.out.println(" "+errorMsg);
+//	}
+//	
 	
 }

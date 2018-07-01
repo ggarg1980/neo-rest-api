@@ -56,12 +56,6 @@ public class OperObj
 	public void setLeafNode(String leafNode) {
 		this.leafNode = leafNode;
 	}
-//	public JsonObject getJsonObjResult() {
-//		return jsonObjResult;
-//	}
-//	public void setJsonObjResult(JsonObject jsonObjResult) {
-//		this.jsonObjResult = jsonObjResult;
-//	}
 	public String getOperation() {
 		return operation;
 	}

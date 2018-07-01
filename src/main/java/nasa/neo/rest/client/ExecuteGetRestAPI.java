@@ -54,7 +54,7 @@ public class ExecuteGetRestAPI extends GenericExecuteRestAPI {
 			{
 				strbuilder.append(sc.nextLine());
 			}
-			logger.debug("\nJSON Response in String format \n"+strbuilder); 
+			//logger.debug("\nJSON Response in String format \n"+strbuilder); 
 		}
 		catch(Exception e)
 		{

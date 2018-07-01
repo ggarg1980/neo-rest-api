@@ -5,13 +5,21 @@ import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.log4j.Logger;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
+
 public class UtilFunction
 {
+	static final Logger logger = Logger.getLogger(UtilFunction.class);
 	public static Integer counter = new Integer(1);
 	public static boolean isValidOperation(String str)
 	{
@@ -163,6 +171,26 @@ public class UtilFunction
 			childObjList.add(childObj);
 		}
 	} 
+	
+	public static void displayOutput(OperObj elecount,OperObj parentObj,Map<String,JsonObject> mapListCount,Map<String,JsonObject> uniqueNodes,List<OperObj> childObjList)
+	{
+		
+	    Gson gson = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
+		   
+	    logger.info("==================================================================================================================================================");
+	    logger.info("===============================================DISPLAYING RESULTS=================================================================================");
+	    logger.info("==================================================================================================================================================");
+	   for (Map.Entry<String,JsonObject> entry : mapListCount.entrySet()) 
+	   {
+		   logger.info(MessageFormat.format(elecount.getDisplayMsg(),entry.getKey()));
+	   }
+	    
+	   for (OperObj childNode : childObjList) 
+	   {
+		   logger.info("Child Name="+childNode.getName()+" :: "+parentObj.getLeafNode()+"="+childNode.getResultKey()+" ::  Operation="+childNode.getOperation()+" :: Path="+childNode.getPath() +" :: Value="+childNode.getNumValue()+" \n");
+		   logger.info("PrintJsonObject="+ gson.toJson(uniqueNodes.get(childNode.getResultKey()))+" \n");
+	   }
+	}
 	
 	public static void createParentObject(Properties prop,OperObj parentObj) throws IOException 
 	{

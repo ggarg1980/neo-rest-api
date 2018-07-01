@@ -1,20 +1,12 @@
 package nasa.neo.rest.client;
 
-import java.io.IOException;
 import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 import java.util.Set;
 
-import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -22,86 +14,9 @@ import com.google.gson.JsonObject;
 class EvaluateJSONOperations
 {
 	static final Logger logger = Logger.getLogger(EvaluateJSONOperations.class);
-	private String confFile;
 	private  double evaluatedValue =0;
 
-	public static void main(String args[])
-	{
-		try 
-		{
-			BasicConfigurator.configure();
-			if(args.length==0)
-			{
-				logger.error(IConstants.CONFFILEMISSING);
-			}
-			else
-			{
-				EvaluateJSONOperations eval = new EvaluateJSONOperations(args[0]);
-				eval.execute();
-			}
-		}
-		catch (Exception e)
-		{
-			//e.printStackTrace();
-			logger.error(e.getMessage());
-		}
-	}
-	
-	public EvaluateJSONOperations(String confFile)
-	{
-		this.confFile = confFile;
-	}
-	
-	public void execute() throws IOException, Exception
-	{
-		boolean fileLoad = LoadConfigurationData.loadConfData(confFile);
-		if(!fileLoad)
-		{
-			logger.error(LoadConfigurationData.getErrorMsg());
-		}
-		else
-		{
-			Properties prop = LoadConfigurationData.getProp();
-			OperObj	parentObj =  LoadConfigurationData.getParentObj();
-			OperObj	elecount =  LoadConfigurationData.getCountElement();
-			List<OperObj> childObjList  = LoadConfigurationData.getChildObjList();
-			JsonObject jsonObject = new ExecuteGetRestAPI(prop.getProperty(IConstants.URL), prop).execute();
-			Map<String,JsonObject> mapListCount = new HashMap<String,JsonObject>();
-			findJSONPathObject(jsonObject, elecount.getPath(),mapListCount);
-		    Map<String,JsonObject> uniqueNodes = new HashMap<String,JsonObject>();
-		    findJSONPathObject(jsonObject, parentObj.getPath(),uniqueNodes);
-
-		   for (OperObj childNode : childObjList) 
-		   {
-			   for (Map.Entry<String,JsonObject> entry : uniqueNodes.entrySet()) 
-			   {
-		            processJsonObjectV2(entry.getKey(),entry.getValue(), childNode.getPathArr(),childNode.getLeafNode(), childNode.getIndex(),childNode);
-			   }
-			   System.out.println("=========++++++++++++++++++"+childNode.getResultKey());
-		   }
-		   print(mapListCount, childObjList, uniqueNodes);
-		   
-		   
-		   
-//			//processJsonObject(jsonObject, parentObj.getPathArr(),parentObj.getLeafNode(), parentObj.getIndex(),childObjList);
-//		    Gson gson = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
-//		   
-//			for (OperObj rst : childObjList) 
-//			{
-//				//rst.
-//				    String prettyJson = gson.toJson(rst.getJsonObjResult());
-//			    System.out.println("prettyJson="+prettyJson);
-//				
-//			}	    		
-		}
-	}
-	
-	public void print(Map<String,JsonObject> mapListCount, List<OperObj> childObjList, Map<String,JsonObject> uniqueNodes)
-	{
-		
-	}
-	
-	public void processJsonObjectV2(String key, JsonObject jsonObject,String[] arrSplit,String leafNode, Integer index,OperObj child) throws Exception 
+	public void processJsonObjectOperation(String key, JsonObject jsonObject,String[] arrSplit,String leafNode, Integer index,OperObj child) throws Exception 
 	{
 	    JsonElement element = jsonObject.get(arrSplit[index]);
 	    if(element==null)
@@ -118,12 +33,12 @@ class EvaluateJSONOperations
 	       for(int i=0;i<jsonArray.size();i++)
 	       {
 	    	   JsonElement tempElement = jsonArray.get(i);
-	    	   processJsonObjectV2(key,tempElement.getAsJsonObject(),arrSplit,leafNode,tempIndex,child);
+	    	   processJsonObjectOperation(key,tempElement.getAsJsonObject(),arrSplit,leafNode,tempIndex,child);
 	       }
 	    }
 	    if(element.isJsonObject())
 	    {
-	    	processJsonObjectV2(key,element.getAsJsonObject(),arrSplit,leafNode,++index,child);
+	    	processJsonObjectOperation(key,element.getAsJsonObject(),arrSplit,leafNode,++index,child);
 	    }
 	    if(element.isJsonPrimitive())
 	    {
@@ -168,7 +83,7 @@ class EvaluateJSONOperations
         }
 
 	
-	public void evaluteResult(String key, OperObj rst,JsonObject jsonObject)
+	private void evaluteResult(String key, OperObj rst,JsonObject jsonObject)
 	{
 		 if(rst.getNumValue().doubleValue()==-1)
 		 {

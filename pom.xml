@@ -86,7 +86,7 @@
 	                <archive>
 	                <manifest>
 	                    <mainClass>
-	                        nasa.neo.rest.client.EvaluateJSONOperations
+	                        nasa.neo.rest.client.Runner
 	                    </mainClass>
 	                </manifest>
 	                </archive>
