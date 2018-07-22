@@ -21,9 +21,9 @@ Please install following softwares on your system
    ii. neorestapi-0.0.1-SNAPSHOT-javadoc.jar - This jar contains all java-docs for the different class used in this program.
    iii. jacoco-ut\index.html - This html file contains the code coverage results for reference.
 ```
-<b>*NOTE: As maven needs to download dependencies, please ensure dependencies can be easily downloadable from internet.<br> 
+<b>*NOTE: Please ensure maven dependencies can be easily downloadable from internet.<br> 
     In case if you behind proxy there are chances that mvn is not able to download required dependencies.
-</b>
+</b> <br>
 5. Go inside <b>target</b> folder and run the program using following command.
 ```
    java -cp neorestapi-0.0.1-SNAPSHOT.jar nasa.neo.rest.client.Runner ../config.properties <<start_date>> <<end_date>> 
