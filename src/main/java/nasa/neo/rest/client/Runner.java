@@ -1,5 +1,6 @@
 package nasa.neo.rest.client;
 
+import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -62,8 +63,19 @@ class Runner extends ConfigPropertiesObjList
 			 
 			 EvaluateJSONOperations eval = new EvaluateJSONOperations();
 			
-		     eval.findJSONPathObject(jsonObject, countElement.getPath(),mapListCount);
-		     eval.findJSONPathObject(jsonObject, parentObj.getPath(),uniqueNodes);
+			 eval.findJSONPathObject(jsonObject,IConstants.PARENTNODE, parentObj.getPath(),uniqueNodes);
+			 if(uniqueNodes.size()==0)
+			 {
+				 logger.error(MessageFormat.format(IConstants.ELEMENTNOTFOUND,IConstants.PARENTNODE,parentObj.getPath()));
+				 return isExecSucess;
+			 }
+		     eval.findJSONPathObject(jsonObject,IConstants.ELEMENTCOUNT, countElement.getPath(),mapListCount);
+			 if(mapListCount.size()==0)
+			 {
+				 logger.error(MessageFormat.format(IConstants.ELEMENTNOTFOUND,IConstants.ELEMENTCOUNT,countElement.getPath()));
+				 return isExecSucess;
+			 }
+		     
 		    
 		     logger.debug(" find operations complete ");
 		    

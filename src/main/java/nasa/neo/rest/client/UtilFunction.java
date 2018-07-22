@@ -69,7 +69,7 @@ public class UtilFunction
 		boolean isValid = true;
 		try
 		{
-		   Integer.parseInt(str);
+		   Double.parseDouble(str);
 		}
 		catch(Exception e)
 		{
@@ -293,9 +293,9 @@ public class UtilFunction
 		StringBuilder sb = new StringBuilder();
 		sb.append(IConstants.NEWLINECHAR);
 		sb.append(IConstants.CONST1);
-		sb.append(IConstants.NEWLINECHAR);
 	   for (Map.Entry<String,JsonObject> entry : mapListCount.entrySet()) 
 	   {
+		   sb.append(IConstants.NEWLINECHAR);
 		   sb.append(MessageFormat.format(elecount.getDisplayMsg(),entry.getKey()));
 		   sb.append(IConstants.NEWLINECHAR);
 		   sb.append(IConstants.CONST1);

@@ -30,24 +30,48 @@ class EvaluateJSONOperations
 	private  double evaluatedValue = 0;
 
 	/** processJsonObjectOperation - This method compares the value of old object with the current object and based on comparison, evaluates which object to retain and which one to discard
-	 * @param key
-	 * @param jsonObject
-	 * @param arrSplit
-	 * @param leafNode
-	 * @param index
-	 * @param child
+	 * @param key - This stores the value of the unique_id used to distinguish different objects uniquely e.g. neo_reference_id
+	 * @param jsonObject - Json Object used for traversal 
+	 * @param arrSplit - Array used for traversal, element by element till leaf node is reached
+	 * @param leafNode - Leaf 
+	 * @param index - Index used to traversal via arrSplit
+	 * @param child - Child against which operation needs to be performed 
 	 * @throws Exception
 	 */
 	public void processJsonObjectOperation(String key, JsonObject jsonObject,String[] arrSplit,String leafNode, Integer index,OperObj child) throws Exception 
 	{
+		logger.debug("processJsonObjectOperation::entry :: key="+key+" leafNode="+leafNode+"  index="+index+" arrSplit="+arrSplit[index]);
+		String error;
 	    JsonElement element = jsonObject.get(arrSplit[index]);
+	    //Element evaluated to null -> This means path defined in the config file is not correct, throw exception 
 	    if(element==null)
 	    {
 	    	String errorPath = MessageFormat.format(IConstants.JSONPATHERROR,child.getName(), child.getPath(),arrSplit[index]);
-	    	logger.error(errorPath);
 	    	throw new Exception(errorPath);
 	    }
-	    
+	    // Check if arr[index] matches leaf node and also check if element is of type Primitive. In case if its not that means its not leaf node and correct evaluation can't be done. throw error
+	    if(arrSplit[index].equalsIgnoreCase(leafNode))
+	    {
+		    if(element.isJsonPrimitive())
+		    {
+		    	if(UtilFunction.isValidNumber(element.getAsString()))
+		    	{
+		    		evaluatedValue = element.getAsDouble();
+		    		evaluteResult(key,child);
+		    	}
+		    	else
+		    	{
+	    	    	error = MessageFormat.format(IConstants.CHILDELEMENTNOTVALIDNUMBER,child.getName(),child.getPath(),element.getAsString());
+	    	    	throw new Exception(error);
+		    	}
+		    }
+		    else
+		    {
+		    	error = MessageFormat.format(IConstants.CHILDELEMENTNOTLEAF,child.getName(),child.getPath());
+    	    	throw new Exception(error);
+		    }
+	    }
+	  //Element evaluated JSON Array -> Traversal needs to be done for all the elements in the array. Recursive call to process all the array elements 
 	    if(element.isJsonArray())
 	    {
 	       JsonArray jsonArray = element.getAsJsonArray();
@@ -63,53 +87,59 @@ class EvaluateJSONOperations
 	    {
 	    	processJsonObjectOperation(key,element.getAsJsonObject(),arrSplit,leafNode,++index,child);
 	    }
-	    // In case if element is JSON object - call the function recursive
-	    if(element.isJsonPrimitive())
-	    {
-	    	if(arrSplit[index].equalsIgnoreCase(leafNode))
-	    	{
-	    		evaluatedValue = element.getAsDouble();
-	    		evaluteResult(key,child);
-	    	}
-	    }
+	    
+	    logger.debug("processJsonObjectOperation::exit :: key="+key+" leafNode="+leafNode+"  index="+index+" arrSplit="+arrSplit[index]);
 	}
 	
 
 	/** This method traverses the JSON object and based on the defined parameter finds the actual value.
 	 *  This method is recursive and continues to execute till find the relevant key 
 	 * @param jsonObject - Parent Json Object
+	 * @param configFileKey - This key is used to provide more details about errorMsg
 	 * @param toBeIdentifiedKey - Key to be identified for example parent key like neo_reference_id 
 	 * @param mapListCount - Map of the objects identified 
+	 * @throws Exception 
 	 */
-	public void findJSONPathObject(JsonObject jsonObject,String toBeIdentifiedKey,Map<String,JsonObject> mapListCount) 
+	public void findJSONPathObject(JsonObject jsonObject,String configFileKey, String toBeIdentifiedKey,Map<String,JsonObject> mapListCount) throws Exception 
 	{
+		logger.debug("findJSONPathObject::entry :: toBeIdentifiedKey="+toBeIdentifiedKey+" configFileKey="+configFileKey+" jsonObject="+jsonObject);
         Set<Map.Entry<String, JsonElement>> set = jsonObject.entrySet();
         Iterator<Map.Entry<String, JsonElement>> iterator = set.iterator();
-        //Iterate  
+        //Iterate over all the elements present in Json  
 	        while (iterator.hasNext())
 	        {
 	            Map.Entry<String, JsonElement> entry = iterator.next();
 	            String key = entry.getKey();
 	            JsonElement element = entry.getValue();
+	            //check if element matches the toBeIdentifiedKey then break else continue
 	            if(key.equalsIgnoreCase(toBeIdentifiedKey))
 	            {
+	            	//check if the matching element is primitive or not. In case if its not primitive it means its not a leaf node error needs to be thrown
+	        	    if(!element.isJsonPrimitive())
+	        	    {
+	        	    	String errorPath = MessageFormat.format(IConstants.ELEMENTNOTLEAF,configFileKey,toBeIdentifiedKey);
+	        	    	throw new Exception(errorPath);
+	        	    }
 	            	mapListCount.put(element.getAsString(), jsonObject);
 	            	break;
 	            }
+	            //Object identified is a JSON array - all the elements needs to be traversed, call function recursively 
 	    	    if(element.isJsonArray())
 	    	    {
 	    	       JsonArray jsonArray = element.getAsJsonArray();
 	    	       for(int i=0;i<jsonArray.size();i++)
 	    	       {
 		    	    	   JsonElement tempElement = jsonArray.get(i);
-		    	    	   findJSONPathObject(tempElement.getAsJsonObject(),toBeIdentifiedKey,mapListCount);
+		    	    	   findJSONPathObject(tempElement.getAsJsonObject(),configFileKey,toBeIdentifiedKey,mapListCount);
 	    	       }
 	    	    }
+	    	    //In case if element is JSON object - call the function recursively. As it can be another JsonArr or JsonObject or JsonPrimitive
 	    	    if(element.isJsonObject())
 	    	    {
-	    	    	findJSONPathObject(element.getAsJsonObject(),toBeIdentifiedKey,mapListCount);
+	    	    	findJSONPathObject(element.getAsJsonObject(),configFileKey,toBeIdentifiedKey,mapListCount);
 	    	    }
 	        }
+	        logger.debug("findJSONPathObject::exit :: toBeIdentifiedKey="+toBeIdentifiedKey+" configFileKey="+configFileKey+" mapListCount="+mapListCount);
         }
 
 	

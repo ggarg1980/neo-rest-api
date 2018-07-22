@@ -70,9 +70,15 @@ public interface IConstants
 	public String DATEVALERRORDIFFERROR = "\nPlease ensure the difference between start date and end date should not be more than 7 days\n"
 			+ "Input dates provided by user are: Start Date = {0} and End Date {1}. ";
 	public String BASICVALSTR = "\nBasic Validations failed :\n";
-	public String JSONPATHERROR = " \n ERROR: Child = {0}  \n JSON Path = {1} \n Problematic Path = {2}. Please fix before proceeding.";
+	public String JSONPATHERROR = " \n ERROR: Child = {0}  \n Path Defined in config file = {1} \n Problematic Path = <<{2}>>. Please fix in config file before proceeding. Program terminated.";
 	public String CHILDVALIDATIONMSG ="{0}. The child object should contain nasa.neo.rest.child.{1} all parameters like name,path,operation,displaymsg, displayunitmsg. Valid values for Operation are "+OPERATIONLIST+". \n";
 	public String CHILDCOUNTVALIDATIONMSG ="{0}. The child count ({1}) should be non empty and valid e.g. 2. \n";
+	public String ELEMENTNOTFOUND = "Element defined against <<{0}>> property not found. Value provided in config file <<{1}>>. Please fix the configuration file. Program terminated.";
+	public String ELEMENTNOTLEAF = "Element defined against <<{0}>> property is not leaf node e.g element_count/neo_reference_id etc. Value provided in config file <<{1}>>. Please fix the configuration file. Program terminated.";
+	public String CHILDELEMENTNOTLEAF = "\nFor child <<{0}>> path is not correctly set. Path should have leaf node e.g estimated_diameter_min or miles_per_hour etc are valid leaf nodes. \n"
+			+ "Value provided in config file <<{1}>>. Please fix the configuration file. Program terminated.";
+	public String CHILDELEMENTNOTVALIDNUMBER = "\nFor child <<{0}>> path is not correctly set. Path should have numeric leaf node e.g estimated_diameter_min or miles_per_hour etc are valid leaf nodes. \n"
+			+ "Value provided in config file <<{1}>>, Evaluated value from reponse is <<{2}>> comparison can not be performed. \nPlease fix the configuration file. Program terminated.";
 	
 	//Constants defined for printing result data
 	public String DISPLAYCHILDRESULTREF = "{0} = {1}";
