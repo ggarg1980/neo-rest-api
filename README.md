@@ -17,24 +17,24 @@ Please install following softwares on your system
 ``` mvn clean package``` </br>
 4. Check BUILD is successful. <b>target</b> folder contains following important artifacts  
 ```
-   i. neorestapi-0.0.1-SNAPSHOT.jar - This jar is used to run NEO APIs
-   ii. neorestapi-0.0.1-SNAPSHOT-javadoc.jar - This jar contains all java-docs for the different class used in this program
+   i. neorestapi-0.0.1-SNAPSHOT.jar - This jar is used to run NEO APIs.
+   ii. neorestapi-0.0.1-SNAPSHOT-javadoc.jar - This jar contains all java-docs for the different class used in this program.
    iii. jacoco-ut\index.html - This html file contains the code coverage results for reference.
-   
 ```
-5. Go inside <b>target<b> folder and run the program using following command.
+5. Go inside <b>target</b> folder and run the program using following command.
 ```
-   java -cp neorestapi-0.0.1-SNAPSHOT.jar nasa.neo.rest.client.Runner ../config.properties
+   java -cp neorestapi-0.0.1-SNAPSHOT.jar nasa.neo.rest.client.Runner ../config.properties <<start_date>> <<end_date>> 
+   e.g. 
+   java -cp neorestapi-0.0.1-SNAPSHOT.jar nasa.neo.rest.client.Runner ../config.properties 2018-08-16 2018-08-18 
 ```
-*Note: Please give proper path where config.properties file is present. Please configure properties before running the program. Refer Configuring properties section below
+<b>*Note:</b> Please give proper path of config.properties file is present. Please configure config.properties before running the program. Refer 'Configuring properties file' section below
 
 ### Configuring properties file - config.properties 
 *NOTE: Before configuring the data in config file, please refer to the API response objects for better understanding (link on Valid URLs for response object).
 
 #### 1. nasa.neo.rest.api.url - This property is used to represent URL to be called
 Valid URLs
-1. [Daily Feed URL](https://api.nasa.gov/neo/rest/v1/feed/today?detailed=true&api_key=DEMO_KEY)
-2. [Date range Feed](https://api.nasa.gov/neo/rest/v1/feed?start_date=2018-08-29&end_date=2018-08-29&api_key=DEMO_KEY)
+1. [Date range Feed](https://api.nasa.gov/neo/rest/v1/feed?start_date=2018-08-29&end_date=2018-08-29&api_key=DEMO_KEY)
 
 start_date & end_date are dates in format yyyy-MM-dd e.g. 2018-08-29
 
