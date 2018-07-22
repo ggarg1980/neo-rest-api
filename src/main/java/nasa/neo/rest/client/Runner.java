@@ -39,7 +39,6 @@ class Runner extends ConfigPropertiesObjList
 	 */
 	public static void main(String args[]) 
 	{
-			BasicConfigurator.configure();
 			logger.debug("main::entry");
 			GenericAPIInterface genericAPIinterface = new ExecuteGetRestAPI();
 			Runner runner = new Runner();

@@ -84,7 +84,7 @@ public interface IConstants
 	public String DISPLAYCHILDRESULTREF = "{0} = {1}";
 	public String DISPLAYCHILDRESULTVALUE = "{0} = {1}";
 	public String NEWLINECHAR = "\n";
-	public String CONST1 ="==================================================================================================================================================";
+	public String CONST1 ="========================================================================================";
 	
 	//HTTP Error constants
 	public String HTTPERRORCODE400 = "HttpResponseCode: 400 Internal Server error. Please check the input URL and date parameters and formatting.";
