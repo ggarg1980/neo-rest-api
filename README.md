@@ -13,9 +13,16 @@ Please install following softwares on your system
 ## Download
 1. Please download code from  [Download](https://github.com/ggarg1980/neo-rest-api/) URL. Click on "Clone or Download" button and download ZIP file.
 2. Unzip the ZIP file.
-3. Inside the ZIP file where src folder is present. Open command prompt and run "mvn clean package" command.
-4. Check BUILD is successful and neorestapi-0.0.1-SNAPSHOT.jar is created inside "target" folder.
-5. Go inside target folder and run the program using following command.
+3. Inside the ZIP file where src folder is present. Open command prompt and run "mvn clean package" command.</br>
+``` mvn clean package``` </br>
+4. Check BUILD is successful. <b>target</b> folder contains following important artifacts  
+```
+   i. neorestapi-0.0.1-SNAPSHOT.jar - This jar is used to run NEO APIs
+   ii. neorestapi-0.0.1-SNAPSHOT-javadoc.jar - This jar contains all java-docs for the different class used in this program
+   iii. jacoco-ut\index.html - This html file contains the code coverage results for reference.
+   
+```
+5. Go inside <b>target<b> folder and run the program using following command.
 ```
    java -cp neorestapi-0.0.1-SNAPSHOT.jar nasa.neo.rest.client.Runner ../config.properties
 ```
