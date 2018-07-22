@@ -134,15 +134,20 @@ Absolute value = 28.1
 ========================================================================================
 ```
 
-### Major Class Used and their description
-#### 1. Runner -> This class is used to run the main program and call other required calls
-#### 2. UtilFunction -> This class contains all the utility functions to support other classes
-#### 3. IConstants -> This interface is used to define all the constants and error messages
-#### 4. LoadConfigurationData -> This class is used to load and validate configuration data based on the config file
-#### 5. ExecuteGetRestAPI & GenericExecuteRestAPI -> These classes are used to call Rest API URLs and return JSON object
-#### 6. OperObj -> This class stores information about differnt objects present in the property file and then also stores the data after processing 
-
-
+### Major Classes involved 
+Go to <b>target</b> folder and refer to neorestapi-0.0.1-SNAPSHOT-javadoc.jar for Java-Docs
+```
+1. ConfigPropertiesObjList
+2. EvaluateJSONOperations
+3. ExecuteGetRestAPI
+4. GenericAPIInterface
+5. GenericExecuteRestAPI
+6. IConstants
+7. LoadConfigurationData
+8. OperObj
+9. Runner
+10.UtilFunction
+```
 
 ## Authors
 
