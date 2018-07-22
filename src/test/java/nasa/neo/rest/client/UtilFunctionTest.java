@@ -209,63 +209,36 @@ public class UtilFunctionTest
 			assertTrue("Unexpected exception",false);
 		}
 	}
-	
-	/** Utility Method to validate with different data sets 
-	 * @param key - Key for which value needs to be updated 
-	 * @param value - new value for which test needs to be performed 
-	 * @param oper - 
-	 * 			1 represent child method validation. 
-	 * 			2 represent parent method validation. 
-	 * 			3 for validating element count.
-	 * 			4 for validating URL. 
+
+	/** This method is used to test propertyValidations - it removes the input key and then check whether error is generated or not
+	 * @param key
 	 * @throws IOException
 	 */
-	public void validateWithDifferntDataSets(String key,String value,int oper) throws IOException
+	public void validatePropertyMethod(String key) throws IOException
 	{
 		errMsg.setLength(0);
-		String oldValue = props.getProperty(key); 
-		props.setProperty(key, value);
-		boolean validationFailed = false;
-		switch(oper)
-		{
-			case 1:
-				validationFailed = UtilFunction.validateChild(props,errMsg);
-				break;
-			case 2:
-				validationFailed = UtilFunction.validateParent(props,errMsg);
-				break;
-			case 3:
-				validationFailed = UtilFunction.validateCountElement(props,errMsg);
-				break;
-			case 4:
-				validationFailed = UtilFunction.validateURL(props,errMsg);
-				break;
-		}	
-		assertTrue(errMsg.toString(), validationFailed);
+		String value = props.getProperty(key); 
+		props.remove(key);
+		boolean validationSucess = UtilFunction.propertyValidations(props, errMsg);
+		assertFalse(errMsg.toString(), validationSucess);
 		assertTrue(errMsg.toString().length()>0);
-		props.setProperty(key, oldValue);
+		props.setProperty(key, value);
 		errMsg.setLength(0);
-	}
+	}	
 
-	
-
+	/** This method is used parent method which do validations of all the child methods 
+	 *  This method will do all such validations
+	 * @throws IOException
+	 */
 	@Test
-	public void testValidateChildWithDifferntDataSets() 
+	public void testPropertyValidations() throws IOException 
 	{
-		try 
-		{
-			validateWithDifferntDataSets("nasa.neo.rest.child.operation.count","XX",1);
-			validateWithDifferntDataSets("nasa.neo.rest.child.operation.count","",1);
-		} 
-		catch (IOException e)
-		{
-			e.printStackTrace();
-			assertTrue("Unexpected exception",false);
-		}
+		assertTrue("Failure : All the properties are present so this function should be successful ", UtilFunction.propertyValidations(props, errMsg));
+		validatePropertyMethod(IConstants.CHILDNODECOUNT); //Data set 1 - Test for child
+		validatePropertyMethod(IConstants.PARENTNODE); //Data set 2 - Test for parent
+		validatePropertyMethod(IConstants.ELEMENTCOUNT); //Data set 3 - Test for count element
+		validatePropertyMethod(IConstants.URL);//Data set 4 - Test for URL
 	}
-
-	
-
 	
 	/** This method is used to validate whether all the objects are populated correctly or not. There can be possibility that by mistake wrong parameters might be set for an object. 
 	 *  This method will do all such validations
@@ -299,33 +272,4 @@ public class UtilFunctionTest
 		
 	}
 
-	/** This method is used parent method which do validations of all the child methods 
-	 *  This method will do all such validations
-	 * @throws IOException
-	 */
-	@Test
-	public void testPropertyValidations() throws IOException 
-	{
-		assertTrue("Failure : All the properties are present so this function should be successful ", UtilFunction.propertyValidations(props, errMsg));
-		validatePropertyMethod("nasa.neo.rest.child.operation.count");
-		validatePropertyMethod(IConstants.PARENTNODE);
-		validatePropertyMethod(IConstants.ELEMENTCOUNT);
-		validatePropertyMethod(IConstants.URL);
-	}
-	
-	/** This method is used to test propertyValidations - it removes the input key and then check whether error is generated or not
-	 * @param key
-	 * @throws IOException
-	 */
-	public void validatePropertyMethod(String key) throws IOException
-	{
-		errMsg.setLength(0);
-		String value = props.getProperty(key); 
-		props.remove(key);
-		boolean validationSucess = UtilFunction.propertyValidations(props, errMsg);
-		assertFalse(errMsg.toString(), validationSucess);
-		assertTrue(errMsg.toString().length()>0);
-		props.setProperty(key, value);
-		errMsg.setLength(0);
-	}
 }
