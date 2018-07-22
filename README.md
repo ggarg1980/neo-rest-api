@@ -1,6 +1,6 @@
 # NEO-REST-API
 
-“Near Earth Objects” using the NASA RESTful Web Service [NEO-REST-API](https://api.nasa.gov/api.html#NeoWS). 
+“Near Earth Objects” using the NASA RESTful Web Service [NEO-REST-API](https://api.nasa.gov/api.html#NeoWS). </br>
 Identify which NEO is the largest in size and which is the closest to Earth.  
 Output the total number of NEOs, and the details retrieved for both the largest and closest NEOs identified.
 
